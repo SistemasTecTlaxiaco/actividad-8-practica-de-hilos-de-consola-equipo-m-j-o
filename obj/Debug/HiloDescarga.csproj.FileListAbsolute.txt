@@ -1,0 +1,7 @@
+C:\Users\garci\source\repos\HiloDescarga\HiloDescarga\bin\Debug\HiloDescarga.exe.config
+C:\Users\garci\source\repos\HiloDescarga\HiloDescarga\bin\Debug\HiloDescarga.exe
+C:\Users\garci\source\repos\HiloDescarga\HiloDescarga\bin\Debug\HiloDescarga.pdb
+C:\Users\garci\source\repos\HiloDescarga\HiloDescarga\obj\Debug\HiloDescarga.csproj.AssemblyReference.cache
+C:\Users\garci\source\repos\HiloDescarga\HiloDescarga\obj\Debug\HiloDescarga.csproj.CoreCompileInputs.cache
+C:\Users\garci\source\repos\HiloDescarga\HiloDescarga\obj\Debug\HiloDescarga.exe
+C:\Users\garci\source\repos\HiloDescarga\HiloDescarga\obj\Debug\HiloDescarga.pdb
