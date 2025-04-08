@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\camar\\OneDrive\\Escritorio\\re\\actividad-8-practica-de-hilos-de-consola-equipo-m-j-o\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{D79F8978-F68D-42BC-9CD7-85853EB466C1}|HiloDescarga.csproj|c:\\users\\camar\\onedrive\\escritorio\\re\\actividad-8-practica-de-hilos-de-consola-equipo-m-j-o\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D79F8978-F68D-42BC-9CD7-85853EB466C1}|HiloDescarga.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\camar\\OneDrive\\Escritorio\\re\\actividad-8-practica-de-hilos-de-consola-equipo-m-j-o\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\camar\\OneDrive\\Escritorio\\re\\actividad-8-practica-de-hilos-de-consola-equipo-m-j-o\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAIQAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T18:04:33.335Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

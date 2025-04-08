@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35707.178 d17.12
+VisualStudioVersion = 17.13.35828.75 d17.13
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HiloDescarga", "HiloDescarga\HiloDescarga.csproj", "{D79F8978-F68D-42BC-9CD7-85853EB466C1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HiloDescarga", "HiloDescarga.csproj", "{D79F8978-F68D-42BC-9CD7-85853EB466C1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,5 +18,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1A3C3B4F-6E63-43A3-8B29-77FED4A851B5}
 	EndGlobalSection
 EndGlobal
