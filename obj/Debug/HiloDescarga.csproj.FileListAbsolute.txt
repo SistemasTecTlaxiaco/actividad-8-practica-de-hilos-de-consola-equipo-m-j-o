@@ -19,3 +19,10 @@ C:\Users\moral\OneDrive\Escritorio\hilos\actividad-8-practica-de-hilos-de-consol
 C:\Users\moral\OneDrive\Escritorio\hilos\actividad-8-practica-de-hilos-de-consola-equipo-m-j-o\obj\Debug\HiloDescarga.csproj.CoreCompileInputs.cache
 C:\Users\moral\OneDrive\Escritorio\hilos\actividad-8-practica-de-hilos-de-consola-equipo-m-j-o\obj\Debug\HiloDescarga.exe
 C:\Users\moral\OneDrive\Escritorio\hilos\actividad-8-practica-de-hilos-de-consola-equipo-m-j-o\obj\Debug\HiloDescarga.pdb
+C:\Users\sosa1\Desktop\Practica2\actividad-8-practica-de-hilos-de-consola-equipo-m-j-o\bin\Debug\HiloDescarga.exe.config
+C:\Users\sosa1\Desktop\Practica2\actividad-8-practica-de-hilos-de-consola-equipo-m-j-o\bin\Debug\HiloDescarga.exe
+C:\Users\sosa1\Desktop\Practica2\actividad-8-practica-de-hilos-de-consola-equipo-m-j-o\bin\Debug\HiloDescarga.pdb
+C:\Users\sosa1\Desktop\Practica2\actividad-8-practica-de-hilos-de-consola-equipo-m-j-o\obj\Debug\HiloDescarga.csproj.AssemblyReference.cache
+C:\Users\sosa1\Desktop\Practica2\actividad-8-practica-de-hilos-de-consola-equipo-m-j-o\obj\Debug\HiloDescarga.csproj.CoreCompileInputs.cache
+C:\Users\sosa1\Desktop\Practica2\actividad-8-practica-de-hilos-de-consola-equipo-m-j-o\obj\Debug\HiloDescarga.exe
+C:\Users\sosa1\Desktop\Practica2\actividad-8-practica-de-hilos-de-consola-equipo-m-j-o\obj\Debug\HiloDescarga.pdb

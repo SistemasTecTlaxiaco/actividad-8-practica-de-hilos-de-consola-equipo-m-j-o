@@ -6,25 +6,31 @@ class Program
 {
     static ConcurrentQueue<string> downloadedFiles = new ConcurrentQueue<string>();
     static ConcurrentQueue<string> processedFiles = new ConcurrentQueue<string>();
+    static ConcurrentQueue<string> compressedFiles = new ConcurrentQueue<string>();
 
     static AutoResetEvent downloadEvent = new AutoResetEvent(false);
     static AutoResetEvent processEvent = new AutoResetEvent(false);
+    static AutoResetEvent compressEvent = new AutoResetEvent(false);
 
     static bool downloadFinished = false;
     static bool processFinished = false;
+    static bool compressFinished = false;
 
     static void Main()
     {
         Thread downloader = new Thread(DownloadFiles);
         Thread processor = new Thread(ProcessFiles);
+        Thread compressor = new Thread(CompressFiles); // NUEVO HILO
         Thread logger = new Thread(LogFiles);
 
         downloader.Start();
         processor.Start();
+        compressor.Start(); // INICIO DEL NUEVO HILO
         logger.Start();
 
         downloader.Join();
         processor.Join();
+        compressor.Join(); // ESPERA A QUE TERMINE
         logger.Join();
 
         Console.WriteLine("\n✔ Todo finalizado correctamente.");
@@ -44,11 +50,11 @@ class Program
             }
 
             downloadedFiles.Enqueue(file);
-            downloadEvent.Set(); // Señala al procesador que hay un archivo
+            downloadEvent.Set();
         }
 
         downloadFinished = true;
-        downloadEvent.Set(); // Despierta al procesador por si está esperando
+        downloadEvent.Set();
     }
 
     static void ProcessFiles()
@@ -62,7 +68,7 @@ class Program
                 Console.WriteLine($"✅ {file} procesado.");
 
                 processedFiles.Enqueue(file);
-                processEvent.Set(); // Señala al logger
+                processEvent.Set();
             }
             else
             {
@@ -71,21 +77,45 @@ class Program
         }
 
         processFinished = true;
-        processEvent.Set(); // Despierta al logger por si está esperando
+        processEvent.Set();
     }
 
-    static void LogFiles()
+    static void CompressFiles()
     {
         while (!processFinished || !processedFiles.IsEmpty)
         {
             if (processedFiles.TryDequeue(out string file))
+            {
+                Console.WriteLine($"\n🗜 Comprimiendo {file}...");
+                Thread.Sleep(800);
+                string compressedFile = file.Replace(".mp4", ".zip");
+                Console.WriteLine($"📦 {compressedFile} creado.");
+
+                compressedFiles.Enqueue(compressedFile);
+                compressEvent.Set();
+            }
+            else
+            {
+                processEvent.WaitOne();
+            }
+        }
+
+        compressFinished = true;
+        compressEvent.Set();
+    }
+
+    static void LogFiles()
+    {
+        while (!compressFinished || !compressedFiles.IsEmpty)
+        {
+            if (compressedFiles.TryDequeue(out string file))
             {
                 Console.WriteLine($"\n📝 Registrando en log: {file}");
                 Thread.Sleep(500);
             }
             else
             {
-                processEvent.WaitOne();
+                compressEvent.WaitOne();
             }
         }
     }
