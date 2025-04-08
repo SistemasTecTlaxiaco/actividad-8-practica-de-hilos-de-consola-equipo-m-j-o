@@ -1,32 +1,33 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Threading;
 
 class Program
 {
-    static Queue<string> downloadedFiles = new Queue<string>();
-    static Queue<string> processedFiles = new Queue<string>();
-    static object downloadLocker = new object();
-    static object processLocker = new object();
+    static ConcurrentQueue<string> downloadedFiles = new ConcurrentQueue<string>();
+    static ConcurrentQueue<string> processedFiles = new ConcurrentQueue<string>();
+
+    static AutoResetEvent downloadEvent = new AutoResetEvent(false);
+    static AutoResetEvent processEvent = new AutoResetEvent(false);
 
     static bool downloadFinished = false;
     static bool processFinished = false;
 
-    static void Main(string[] args)
+    static void Main()
     {
-        Thread downloaderThread = new Thread(DownloadFiles);
-        Thread processorThread = new Thread(ProcessFiles);
-        Thread loggerThread = new Thread(LogProcessedFiles);
+        Thread downloader = new Thread(DownloadFiles);
+        Thread processor = new Thread(ProcessFiles);
+        Thread logger = new Thread(LogFiles);
 
-        downloaderThread.Start();
-        processorThread.Start();
-        loggerThread.Start();
+        downloader.Start();
+        processor.Start();
+        logger.Start();
 
-        downloaderThread.Join();
-        processorThread.Join();
-        loggerThread.Join();
+        downloader.Join();
+        processor.Join();
+        logger.Join();
 
-        Console.WriteLine("\n✔ Todos los archivos fueron descargados, procesados y registrados.");
+        Console.WriteLine("\n✔ Todo finalizado correctamente.");
     }
 
     static void DownloadFiles()
@@ -36,97 +37,55 @@ class Program
         foreach (var file in files)
         {
             Console.WriteLine($"\n⬇ Descargando {file}...");
-            for (int i = 0; i <= 100; i += 20)
+            for (int i = 0; i <= 100; i += 25)
             {
-                Thread.Sleep(200); // Simula descarga
+                Thread.Sleep(200);
                 Console.WriteLine($"  Progreso {file}: {i}%");
             }
 
-            lock (downloadLocker)
-            {
-                downloadedFiles.Enqueue(file);
-                Monitor.Pulse(downloadLocker); // Notifica al procesador que hay un archivo nuevo
-            }
+            downloadedFiles.Enqueue(file);
+            downloadEvent.Set(); // Señala al procesador que hay un archivo
         }
 
-        lock (downloadLocker)
-        {
-            downloadFinished = true;
-            Monitor.Pulse(downloadLocker); // Avisa al procesador que ya no habrá más archivos
-        }
+        downloadFinished = true;
+        downloadEvent.Set(); // Despierta al procesador por si está esperando
     }
 
     static void ProcessFiles()
     {
-        while (true)
+        while (!downloadFinished || !downloadedFiles.IsEmpty)
         {
-            string fileToProcess = null;
-
-            lock (downloadLocker)
+            if (downloadedFiles.TryDequeue(out string file))
             {
-                while (downloadedFiles.Count == 0 && !downloadFinished)
-                {
-                    Monitor.Wait(downloadLocker);
-                }
+                Console.WriteLine($"\n⚙ Procesando {file}...");
+                Thread.Sleep(1000);
+                Console.WriteLine($"✅ {file} procesado.");
 
-                if (downloadedFiles.Count > 0)
-                {
-                    fileToProcess = downloadedFiles.Dequeue();
-                }
-                else if (downloadFinished)
-                {
-                    break;
-                }
+                processedFiles.Enqueue(file);
+                processEvent.Set(); // Señala al logger
             }
-
-            if (fileToProcess != null)
+            else
             {
-                Console.WriteLine($"\n⚙ Procesando {fileToProcess}...");
-                Thread.Sleep(1000); // Simula procesamiento
-                Console.WriteLine($"✅ {fileToProcess} procesado.");
-
-                lock (processLocker)
-                {
-                    processedFiles.Enqueue(fileToProcess);
-                    Monitor.Pulse(processLocker); // Notifica al logger
-                }
+                downloadEvent.WaitOne();
             }
         }
 
-        lock (processLocker)
-        {
-            processFinished = true;
-            Monitor.Pulse(processLocker); // Avisa al logger que ya no habrá más archivos
-        }
+        processFinished = true;
+        processEvent.Set(); // Despierta al logger por si está esperando
     }
 
-    static void LogProcessedFiles()
+    static void LogFiles()
     {
-        while (true)
+        while (!processFinished || !processedFiles.IsEmpty)
         {
-            string processedFile = null;
-
-            lock (processLocker)
+            if (processedFiles.TryDequeue(out string file))
             {
-                while (processedFiles.Count == 0 && !processFinished)
-                {
-                    Monitor.Wait(processLocker);
-                }
-
-                if (processedFiles.Count > 0)
-                {
-                    processedFile = processedFiles.Dequeue();
-                }
-                else if (processFinished)
-                {
-                    break;
-                }
+                Console.WriteLine($"\n📝 Registrando en log: {file}");
+                Thread.Sleep(500);
             }
-
-            if (processedFile != null)
+            else
             {
-                Console.WriteLine($"\n📝 Registrando en log: {processedFile}");
-                Thread.Sleep(500); // Simula escritura en log
+                processEvent.WaitOne();
             }
         }
     }
